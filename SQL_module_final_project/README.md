@@ -1,0 +1,3 @@
+The project aims to analyse the credit and credit card use behaviour of bank customers. The main task is to identify the key factors influencing loan repayment, analyse customer characteristics by gender and region, and identify which customer groups pose a higher credit risk.
+
+The project can be used to support the bank's decision-making process, help optimise lending policies and identify potential areas for improving repayment rates. The results of the analysis could also be used to better target loan offers and manage customer relationships.
