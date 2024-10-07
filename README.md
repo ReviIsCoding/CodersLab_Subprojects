@@ -2,6 +2,5 @@
 ## Refresher projects at the end of each subject block
 
 Content of the repository:
-* Final_project_from_SQL_module - File with SQL queries from the final workshop. The project concerned the 'Financial' database, which contains information about loans that have been repaid or not. Created using MySQL
-
+* SQL_module_final_project -> a folder containing the final assignment from the SQL Data Analysis module in the CodersLab course.
 
