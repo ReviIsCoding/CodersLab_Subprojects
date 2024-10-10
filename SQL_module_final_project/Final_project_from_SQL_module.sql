@@ -1,5 +1,5 @@
-# In our work we will use the financial database,
-# which contains information about loans that have been repaid or not.
+-- In our work we will use the financial database,
+-- which contains information about loans that have been repaid or not.
 
 /*History of loans granted
 summary of granted loans in the following dimensions:
