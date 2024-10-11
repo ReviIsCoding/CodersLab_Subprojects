@@ -1,0 +1,5 @@
+status,COUNT(loan_id)
+A,203
+B,31
+D,45
+C,403
