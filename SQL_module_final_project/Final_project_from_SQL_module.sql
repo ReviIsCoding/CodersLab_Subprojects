@@ -97,10 +97,10 @@ WITH cte AS (
     WHERE status IN('A', 'C')
 )
 SELECT (SELECT SUM(saldo) FROM tmp_result) - (SELECT amount from cte); -- wyszło 0
-# Analiza klienta cz. 1
-# Modyfikując zapytania z zadania dot. spłaconych pożyczek, odpowiedz na poniższe pytania:
-#  - kto posiada więcej spłaconych pożyczek – kobiety czy mężczyźni?
-#  - jaki jest średni wiek kredytobiorcy w zależności od płci?
+/*Analiza klienta cz. 1
+ Modyfikując zapytania z zadania dot. spłaconych pożyczek, odpowiedz na poniższe pytania:
+  - kto posiada więcej spłaconych pożyczek – kobiety czy mężczyźni?
+  - jaki jest średni wiek kredytobiorcy w zależności od płci?*/
 DROP TABLE IF EXISTS tmp_client_analysis;
 CREATE TEMPORARY TABLE tmp_client_analysis AS (
 SELECT
@@ -124,10 +124,10 @@ GROUP BY gender;
 
 SELECT * FROM tmp_client_analysis; -- check - 88 rows
 
-/*-- year of birth of the borrower
+-- year of birth of the borrower
 SELECT EXTRACT(YEAR FROM birth_date) AS birth_year
 FROM client;*/
-/*-- average age of the borrower
+-- average age of the borrower
 SELECT AVG(2021 - EXTRACT(YEAR FROM c.birth_date)) FROM client c;*/
 
  /* Customer analysis part 2
@@ -193,8 +193,8 @@ WHERE l.status IN ('A', 'C')
 AND d.type = 'OWNER'
 AND birth_date > '1990-12-31'
 GROUP BY c.client_id
-HAVING saldo_konta > 1000 AND loan_count > 5  -- we have an empty result set
-;
+HAVING saldo_konta > 1000 AND loan_count > 5;  -- we have an empty result set
+
 -- attempt to rewrite
 SELECT
     client_id
@@ -221,7 +221,7 @@ INNER JOIN disp d on c.client_id = d.client_id
 INNER JOIN loan l ON d.account_id = l.account_id
 WHERE d.type = 'OWNER' AND l.status IN ('A', 'C')
 GROUP BY c.client_id
-HAVING (SUM(l.amount) - SUM(payments)) > 1000; -- 606 wierszy
+HAVING (SUM(l.amount) - SUM(payments)) > 1000; -- 606 rows
 -- in this way, questions can be answered with simpler queries...
 
 /* Selection part 2
