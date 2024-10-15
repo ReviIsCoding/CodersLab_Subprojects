@@ -272,20 +272,19 @@ CREATE TEMPORARY TABLE tmp_cards_at_expiration
     generated_for_date date                     null
 );
 
--- according to the solution, queries searching for cards that expire in 7 days from a given date should be added to the querier
+-- searching for specified expiration date
 WITH card_stats AS(
     SELECT cl.client_id,
        c.card_id,
        ADDDATE(c.issued, INTERVAL 3 YEAR ) AS expiration_date,
        dst.A3 AS client_region
-       -- here to add on when generated
 FROM client cl
 INNER JOIN district dst ON cl.district_id = dst.district_id
 INNER JOIN disp d ON cl.client_id = d.client_id
 INNER JOIN card c ON d.disp_id = c.disp_id
 )
 SELECT * FROM card_stats
-WHERE expiration_date BETWEEN ADDDATE(input_date, INTERVAL -7 DAY) AND input_date;
+WHERE '2000-01-01' BETWEEN ADDDATE(expiration_date, INTERVAL -7 DAY) AND expiration_date;
 
 -- we create the procedure
 DELIMITER $$
