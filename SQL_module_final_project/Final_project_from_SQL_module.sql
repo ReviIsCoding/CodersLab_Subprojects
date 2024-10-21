@@ -1,5 +1,4 @@
--- In our work we will use the financial database,
--- which contains information about loans that have been repaid or not.
+-- In our work we will use the "financial" database.
 
 /*History of loans granted
 summary of granted loans in the following dimensions:
@@ -44,6 +43,20 @@ SELECT account_id,
     WHERE status IN ('A','C')
     GROUP BY account_id
     ORDER BY loan_count DESC, loan_sum DESC, avg_loan;  -- the loan table is sufficient, as we have the account_id here and this is sufficient to rank the accounts
+
+-- now we crreate ranking
+WITH cte AS (SELECT account_id,
+       COUNT(loan_id) AS loan_count,
+       SUM(amount) AS loan_sum,
+       AVG(amount) AS avg_loan
+    FROM loan
+    WHERE status IN ('A','C')
+    GROUP BY account_id)
+SELECT 
+    *,
+    RANK() OVER (ORDER BY loan_sum DESC) AS rank_by_sum,
+    RANK() OVER (ORDER BY loan_count DESC) AS rank_by_count
+FROM cte;
 
 /*Loans repaid
 Check the balance of loans repaid by customer gender.
@@ -97,10 +110,11 @@ WITH cte AS (
     WHERE status IN('A', 'C')
 )
 SELECT (SELECT SUM(saldo) FROM tmp_result) - (SELECT amount from cte); -- wyszło 0
-/*Analiza klienta cz. 1
- Modyfikując zapytania z zadania dot. spłaconych pożyczek, odpowiedz na poniższe pytania:
-  - kto posiada więcej spłaconych pożyczek – kobiety czy mężczyźni?
-  - jaki jest średni wiek kredytobiorcy w zależności od płci?*/
+
+/*Customer analysis part 1
+ Modifying the queries from the loan repayment task, answer the following questions:
+  - who has more loans repaid - women or men?
+  - what is the average age of the borrower according to gender?*/
 DROP TABLE IF EXISTS tmp_client_analysis;
 CREATE TEMPORARY TABLE tmp_client_analysis AS (
 SELECT
